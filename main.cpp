@@ -2,6 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "httprequest.h"
+#include "testmodel.h"
+
+Q_DECLARE_METATYPE(QJsonModel)
 
 int main(int argc, char *argv[])
 {
@@ -9,13 +12,19 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    httpRequest HttpRequest;
+    HttpRequest.getData("hell");
+
+    qmlRegisterType<TestModel>("TestModel", 1, 0, "Testss");
+
+    qDebug() << qmlRegisterType<QJsonModel>();
+
+
     QQmlApplicationEngine engine;
-    httpRequest h;
+
     QQmlContext *context = engine.rootContext();
-        /* Load the object in context to establish a connection,
-         * also define the name by which the connection will be
-         * */
-    context->setContextProperty("hi", &h);
+    context->setContextProperty("HttpRequest", &HttpRequest);
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
