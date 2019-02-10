@@ -1,0 +1,4 @@
+#ifndef REQUESTMODEL_H
+#define REQUESTMODEL_H
+
+#endif // REQUESTMODEL_H
