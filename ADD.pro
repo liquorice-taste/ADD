@@ -15,9 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     httprequest.cpp \
-    requestresultmodel.cpp \
-    QJsonModel-master/qjsonmodel.cpp \
-    testmodel.cpp
+    requestmodel.cpp \
+    dictionarymodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,6 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     httprequest.h \
-    requestresultmodel.h \
-    QJsonModel-master/qjsonmodel.h \
-    testmodel.h
+    requestmodel.h \
+    dictionarymodel.h
+
+DISTFILES +=

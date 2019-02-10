@@ -2,9 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "httprequest.h"
-#include "testmodel.h"
-
-Q_DECLARE_METATYPE(QJsonModel)
+#include "dictionarymodel.h"
+#include "requestmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,16 +12,23 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     httpRequest HttpRequest;
-    HttpRequest.getData("hell");
+    //HttpRequest.getData("hell");
 
-    qmlRegisterType<TestModel>("TestModel", 1, 0, "Testss");
+    //qmlRegisterType<TestModel>("TestModel", 1, 0, "Testss");
 
-    qDebug() << qmlRegisterType<QJsonModel>();
+    //qDebug() << qmlRegisterType<QJsonModel>();
 
+    //QJsonModel js;
+    //js.load("json.txt");
+    //qDebug() << js.columnCount();
+    qmlRegisterType<DictionaryModel>("Model", 1, 0, "DictionaryModel");
+    qmlRegisterType<HeadwordEntry>("Model", 1, 0, "HeadwordEntry");
 
     QQmlApplicationEngine engine;
 
     QQmlContext *context = engine.rootContext();
+
+    //context->setContextProperty("js", &js);
     context->setContextProperty("HttpRequest", &HttpRequest);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

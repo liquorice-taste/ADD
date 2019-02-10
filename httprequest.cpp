@@ -6,22 +6,26 @@ httpRequest::httpRequest(QObject *parent) : QObject(parent)
     connect(manager, &QNetworkAccessManager::finished, this, &httpRequest::onResult);
 }
 
-QJsonModel httpRequest::jmodel() {
-    return jsm;
-}
-
 void httpRequest::onResult(QNetworkReply *reply)
 {
     if (reply->error()){
         qDebug() << "ERROR"<< reply->errorString();
     } else {
-        
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+        //qDebug() << document;
+        if (!document.isNull()){
+            QJsonObject root = document.object();
+            //QByteArray *b =  new QByteArray(reply->readAll());
+            /*if (jsm.load(reply)) {
+                qDebug() << "caroline sucks!";
+            };*/
+        } else {
+            qDebug() << "caroline sucks";
+        }
+    }
 
-        QJsonObject root = document.object();
-        //QJsonModel * jsm = new QJsonModel();
-        jsm.load(reply->readAll());
-
+    //qDebug() << "колонки" << jsm.columnCount();
+    /*
         QStringList list = root.keys();
         for (auto &i: list) {
             qDebug() << root.value(i);
@@ -45,16 +49,16 @@ void httpRequest::onResult(QNetworkReply *reply)
                 //for (auto & i: map){
                 qDebug() << subtree.keys() << endl << endl;
                 //}
-                /*
+
                 qDebug() << "score" << subtree.value("score").toDouble();
                 qDebug() << "word" << subtree.value("word").toString();
                 qDebug() << "region" << subtree.value("region").toString();
                 qDebug() << "id" << subtree.value("id").toString();
                 qDebug() << "matchString" << subtree.value("matchString").toString() << "\n";
-                */
+
             }
         }
-    }
+    }*/
 }
 
 void httpRequest::getData(QString word)
