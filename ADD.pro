@@ -1,4 +1,4 @@
-QT += quick core gui network testlib
+QT += quick core gui network testlib qml
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     httprequest.cpp \
     requestmodel.cpp \
-    dictionarymodel.cpp
+    headwordentrylist.cpp \
+    dicmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,6 +35,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     httprequest.h \
     requestmodel.h \
-    dictionarymodel.h
+    headwordentrylist.h \
+    dicmodel.h
 
 DISTFILES +=
