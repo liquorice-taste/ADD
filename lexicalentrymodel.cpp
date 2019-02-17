@@ -1,13 +1,13 @@
-#include "dicmodel.h"
+#include "lexicalentrymodel.h"
 
-DicModel::DicModel(QObject *parent)
+LexicalEntryModel::LexicalEntryModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 }
 
 
-int DicModel::rowCount(const QModelIndex &parent) const
+int LexicalEntryModel::rowCount(const QModelIndex &parent) const
 {
     // For list models only the root node (an invalid parent) should return the list's size. For all
     // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
@@ -17,41 +17,39 @@ int DicModel::rowCount(const QModelIndex &parent) const
     return mList->items().size();
 }
 
-QVariant DicModel::data(const QModelIndex &index, int role) const
+QVariant LexicalEntryModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || !mList)
         return QVariant();
 
-    const HeadwordEntryItem item = mList->items().at(index.row());
+    const LexicalEntryItem item = mList->items().at(index.row());
     switch (role) {
-    case IdRole:
-        return QVariant(item.p_id);
     case LanguageRole:
         return QVariant(item.p_language);
-    case WordRole:
-        return QVariant(item.p_word);
-    case LexicalEntryRole:
-        return QVariant::fromValue<QObject *>(item.p_lexicalEntries);
+    case LexicalCathegoryRole:
+        return QVariant(item.p_lexicalCathegory);
+    case TextRole:
+        return QVariant(item.p_text);
     }
 
     return QVariant();
 }
 
-bool DicModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool LexicalEntryModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!mList)
         return false;
 
-    HeadwordEntryItem item = mList->items().at(index.row());
+    LexicalEntryItem item = mList->items().at(index.row());
     switch (role) {
-    case IdRole:
-        item.p_id = value.toInt();
-        break;
     case LanguageRole:
         item.p_language = value.toString();
         break;
-    case WordRole:
-        item.p_word = value.toString();
+    case LexicalCathegoryRole:
+        item.p_lexicalCathegory = value.toString();
+        break;
+    case TextRole:
+        item.p_text = value.toString();
         break;
     }
 
@@ -62,7 +60,7 @@ bool DicModel::setData(const QModelIndex &index, const QVariant &value, int role
     return false;
 }
 
-Qt::ItemFlags DicModel::flags(const QModelIndex &index) const
+Qt::ItemFlags LexicalEntryModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -70,22 +68,21 @@ Qt::ItemFlags DicModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable;
 }
 
-QHash<int, QByteArray> DicModel::roleNames() const
+QHash<int, QByteArray> LexicalEntryModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    names[IdRole] = "id";
     names[LanguageRole] = "language";
-    names[WordRole] = "word";
-    names[LexicalEntryRole] = "lexicalEntries";
+    names[LexicalCathegoryRole] = "lexicalcathegory";
+    names[TextRole] = "text";
     return names;
 }
 
-HeadwordEntryList *DicModel::list() const
+LexicalEntryList *LexicalEntryModel::list() const
 {
     return mList;
 }
 
-void DicModel::setList(HeadwordEntryList *list)
+void LexicalEntryModel::setList(LexicalEntryList *list)
 {
     beginResetModel();
 
@@ -95,18 +92,18 @@ void DicModel::setList(HeadwordEntryList *list)
     mList = list;
 
     if (mList) {
-        connect(mList, &HeadwordEntryList::preItemAppended, this, [=]() {
+        connect(mList, &LexicalEntryList::preItemAppended, this, [=]() {
             const int index = mList->items().size();
             beginInsertRows(QModelIndex(), index, index);
         });
-        connect(mList, &HeadwordEntryList::postItemAppended, this, [=]() {
+        connect(mList, &LexicalEntryList::postItemAppended, this, [=]() {
             endInsertRows();
         });
 
-        connect(mList, &HeadwordEntryList::preItemRemoved, this, [=](int index) {
+        connect(mList, &LexicalEntryList::preItemRemoved, this, [=](int index) {
             beginRemoveRows(QModelIndex(), index, index);
         });
-        connect(mList, &HeadwordEntryList::postItemRemoved, this, [=]() {
+        connect(mList, &LexicalEntryList::postItemRemoved, this, [=]() {
             endRemoveRows();
         });
     }

@@ -17,7 +17,8 @@ SOURCES += \
     httprequest.cpp \
     requestmodel.cpp \
     headwordentrylist.cpp \
-    dicmodel.cpp
+    dicmodel.cpp \
+    lexicalentrymodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,6 +37,7 @@ HEADERS += \
     httprequest.h \
     requestmodel.h \
     headwordentrylist.h \
-    dicmodel.h
+    dicmodel.h \
+    lexicalentrymodel.h
 
 DISTFILES +=

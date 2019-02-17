@@ -21,7 +21,9 @@ int main(int argc, char *argv[])
     //HttpRequest.getData("hell");
 
     qmlRegisterType<DicModel>("Model", 1, 0, "DicModel");
+
     qmlRegisterType<HeadwordEntryList>();//"Model", 1, 0, "HeadwordEntryList");
+    qmlRegisterType<LexicalEntryList>();
     HeadwordEntryList headEntry;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty(QStringLiteral("headEntry"), &headEntry);

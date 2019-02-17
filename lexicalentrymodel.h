@@ -1,31 +1,26 @@
-#ifndef DICMODEL_H
-#define DICMODEL_H
+#ifndef LEXICALENTRYMODEL_H
+#define LEXICALENTRYMODEL_H
 
 #include <QAbstractListModel>
 #include "headwordentrylist.h"
-#include <QVariant>
-#include <QVariantList>
 
-class DicModel : public QAbstractListModel
+class LexicalEntryModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(HeadwordEntryList *list READ list WRITE setList)
+    Q_PROPERTY(LexicalEntryList *list READ list WRITE setList)
 
 public:
-    explicit DicModel(QObject *parent = nullptr);
+    explicit LexicalEntryModel(QObject *parent = nullptr);
 
     enum {
-        IdRole = Qt::UserRole,
-        LanguageRole,
-        WordRole,
-        LexicalEntryRole
+        LanguageRole = Qt::UserRole,
+        LexicalCathegoryRole,
+        TextRole
     };
-    // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    // Editable:
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole) override;
 
@@ -33,11 +28,11 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    HeadwordEntryList *list() const;
-    void setList(HeadwordEntryList *list);
+    LexicalEntryList *list() const;
+    void setList(LexicalEntryList *list);
 
 private:
-    HeadwordEntryList *mList;
+    LexicalEntryList *mList;
 };
 
-#endif // DICMODEL_H
+#endif // LEXICALENTRYMODEL_H
