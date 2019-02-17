@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     //HttpRequest.getData("hell");
 
     qmlRegisterType<DicModel>("Model", 1, 0, "DicModel");
+    qmlRegisterType<LexicalEntryModel>("Model", 1, 0, "LexicalEntryModel");
 
     qmlRegisterType<HeadwordEntryList>();//"Model", 1, 0, "HeadwordEntryList");
     qmlRegisterType<LexicalEntryList>();

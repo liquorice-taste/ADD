@@ -1,9 +1,10 @@
-#include "lexicalentrymodel.h"
+#include "headwordentrylist.h"
 
 LexicalEntryModel::LexicalEntryModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
+
 }
 
 

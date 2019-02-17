@@ -1,4 +1,4 @@
-#ifndef LEXICALENTRYMODEL_H
+/*#ifndef LEXICALENTRYMODEL_H
 #define LEXICALENTRYMODEL_H
 
 #include <QAbstractListModel>
@@ -36,3 +36,4 @@ private:
 };
 
 #endif // LEXICALENTRYMODEL_H
+*/

@@ -22,9 +22,19 @@ ColumnLayout {
                 width: parent.width
 
                 TextField {
-                    text: model.language
+                    text: language
                     onEditingFinished: model.language = text
                     Layout.fillWidth: true
+                }
+                ListView {
+                    model: LexicalEntryModel{
+                    list : lexicalEntries
+                    }
+                    delegate: RowLayout {
+                        TextField {
+                            text: model.text
+                        }
+                    }
                 }
             }
         }
@@ -42,4 +52,6 @@ ColumnLayout {
             Layout.fillWidth: true
         }
     }
+
+
 }
