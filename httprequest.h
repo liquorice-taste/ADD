@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
+#include <QNetworkReply>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -17,10 +18,14 @@ class httpRequest : public QObject
     Q_OBJECT
 private:
     QNetworkAccessManager * manager;
+    QByteArray jsonReply;
 public:
     explicit httpRequest(QObject *parent = nullptr);
+    QByteArray getReply();
+
+
 signals:
-    void onReady();
+    void onReady(const QJsonObject &arr);
 public slots:
     void onResult(QNetworkReply *reply);
     void getData(QString word);

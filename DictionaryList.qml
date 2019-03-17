@@ -1,57 +1,70 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-
+import QtQuick.Controls.Material 2.3
 import Model 1.0
 
-ColumnLayout {
-    Frame {
-        Layout.fillWidth: true
 
-        ListView {
-            implicitWidth: 250
-            implicitHeight: 250
-            anchors.fill: parent
-            clip: true
+Rectangle {
+    border.color: "#000001"
 
-            model: DicModel {
-                list: headEntry
+
+    //"#00BDF2"
+    ListView {
+        implicitWidth: 250
+        implicitHeight: 250
+        anchors.fill: parent
+        clip: true
+        model: DicModel {
+            onModelReset: {
+                console.log("changed")
             }
 
-            delegate: RowLayout {
-                width: parent.width
+            list: headEntry
 
-                TextField {
-                    text: language
-                    onEditingFinished: model.language = text
-                    Layout.fillWidth: true
-                }
-                ListView {
+        }
+
+        delegate: ColumnLayout {
+            width: parent.width
+
+            Text {
+                text: "head: " + language
+                //onEditingFinished: model.language = "head: " + text
+                Layout.fillWidth: true
+                Material.accent: "#fff"
+            }
+            Column {
+                Repeater {
                     model: LexicalEntryModel{
-                    list : lexicalEntries
+                        list : lexicalEntries
                     }
-                    delegate: RowLayout {
-                        TextField {
-                            text: model.text
+                    delegate: ColumnLayout {
+                        Text {
+                            text: language
+                        }
+
+                        Text {
+                            text: "lex u: " + ltext + language + "\n" + lexicalcathegory
                         }
                     }
                 }
             }
+
+            /*ListView {
+                    model: LexicalEntryModel{
+                    list : lexicalEntries
+                    }
+                    delegate: ColumnLayout {
+                        TextField {
+                            text: model.text
+                        }
+                        TextField {
+                            text: model.language
+                        }
+                    }
+                }*/
         }
     }
-
-    RowLayout {
-        Button {
-            text: qsTr("Add new item")
-            onClicked: headEntry.appendItem()
-            Layout.fillWidth: true
-        }
-        Button {
-            text: qsTr("Remove completed")
-            onClicked: headEntry.removeCompletedItems()
-            Layout.fillWidth: true
-        }
-    }
-
-
 }
+
+

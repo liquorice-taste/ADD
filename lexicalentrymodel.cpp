@@ -1,17 +1,14 @@
-#include "headwordentrylist.h"
+#include "dicmodel.h"
 
 LexicalEntryModel::LexicalEntryModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
-
 }
 
 
 int LexicalEntryModel::rowCount(const QModelIndex &parent) const
 {
-    // For list models only the root node (an invalid parent) should return the list's size. For all
-    // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
     if (parent.isValid() || !mList)
         return 0;
 
@@ -38,6 +35,8 @@ QVariant LexicalEntryModel::data(const QModelIndex &index, int role) const
 
 bool LexicalEntryModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+
+
     if (!mList)
         return false;
 
@@ -74,7 +73,7 @@ QHash<int, QByteArray> LexicalEntryModel::roleNames() const
     QHash<int, QByteArray> names;
     names[LanguageRole] = "language";
     names[LexicalCathegoryRole] = "lexicalcathegory";
-    names[TextRole] = "text";
+    names[TextRole] = "ltext";
     return names;
 }
 

@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>DictionaryList.qml</file>
         <file>qml.conf</file>
+        <file>SearchArea.qml</file>
     </qresource>
 </RCC>

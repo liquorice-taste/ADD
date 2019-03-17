@@ -1,4 +1,4 @@
-QT += quick core gui network testlib qml
+QT += quick core gui network testlib quickcontrols2
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -18,7 +18,9 @@ SOURCES += \
     requestmodel.cpp \
     headwordentrylist.cpp \
     dicmodel.cpp \
-    lexicalentrymodel.cpp
+    lexicalentrymodel.cpp \
+    entrymodel.cpp \
+    jsonparser.cpp
 
 RESOURCES += qml.qrc
 
@@ -38,6 +40,6 @@ HEADERS += \
     requestmodel.h \
     headwordentrylist.h \
     dicmodel.h \
-    lexicalentrymodel.h
+    jsonparser.h
 
 DISTFILES +=
