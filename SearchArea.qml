@@ -12,18 +12,18 @@ Rectangle {
         id: rip
         target: HttpRequest
     }
-
+    Material.theme: Material.Dark
     RowLayout {
         id: rl
         anchors.fill: parent
         spacing: 2
-        TextField {
+        TextEdit {
 
             //horizontalAlignment: TextInput.AlignLeft
             verticalAlignment: TextEdit.AlignVCenter
             horizontalAlignment: TextEdit.AlignLeft
             id: tex
-            text: "wddddord"
+            text: "cock"
             font.family: "Helvetica [Cronyx]"
             //adaptive font:
             //font.pixelSize : int
@@ -37,13 +37,10 @@ Rectangle {
         Button {
             id: but
             padding: 10
-
-            //Layout.fillWidth: true
+            Layout.fillHeight: true
             width: parent.width * 0.2
-            //anchors.right: rl.rigth
             Layout.alignment: Qt.AlignRight
-            Material.background: Material.Teal
-            //color: "blue"
+
             onClicked: {
                 HttpRequest.getData(tex.text)
             }

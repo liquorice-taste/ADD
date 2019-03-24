@@ -5,7 +5,7 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQml 2.12
-import QtQuick.Controls.Material 2.3
+import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
@@ -13,13 +13,13 @@ ApplicationWindow {
     visible: true
     width: 480
     height: 640
-    Material.theme: Material.System
+    Material.theme: Material.Dark
     Material.accent: Material.Purple
     Material.background: Material.Teal
 
     Column {
         ToolBar {
-            Material.theme: Material.System
+            Material.theme: Material.Dark
             Material.accent: Material.Purple
             Material.background: Material.Teal
             height: parent.height * 0.07
@@ -66,7 +66,7 @@ ApplicationWindow {
             TabView{
 
                 style: TabViewStyle {
-
+                    Material.theme: Material.Dark
                     frameOverlap: 1
                     tab: Rectangle {
                         //color: styleData.selected ? "steelblue" :"lightsteelblue"
