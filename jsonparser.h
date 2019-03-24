@@ -19,10 +19,10 @@ class jsonParser : public QObject
     Q_OBJECT
 public:
     explicit jsonParser(QObject *parent = nullptr);
-    //HeadwordEntryList *parseDoc();
     void parseDoc();
+    QStringList parseStringList(const QJsonArray &array);
 signals:
-    void sendDoc(const QList<HeadwordEntryItem> &);
+    void sendDoc(HeadwordEntryList *);
 public slots:
     void setDocument(const QJsonObject &doc);
 private:

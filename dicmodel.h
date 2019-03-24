@@ -16,16 +16,14 @@ public:
 
     enum {
         IdRole = Qt::UserRole,
-        LanguageRole,
+        LanguageRole ,
         WordRole,
-        LexicalEntryRole
+        LexicalEntryRole,
+        PronunciationListRole
     };
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
@@ -51,14 +49,12 @@ public:
         LanguageRole = Qt::UserRole,
         LexicalCathegoryRole,
         TextRole,
-        EntriesRole
+        EntriesRole,
+        PronunciationListRole
     };
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
@@ -82,14 +78,12 @@ public:
 
     enum {
         EtymologiesRole = Qt::UserRole,
-        SensesListRole
+        SensesListRole,
+        PronunciationListRole
     };
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
@@ -100,6 +94,104 @@ public:
 
 private:
     EntryList *mList;
+};
+
+
+
+class SenseModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_PROPERTY(SenseList *list READ list WRITE setList)
+
+public:
+    explicit SenseModel(QObject *parent = nullptr);
+
+    enum {
+        DomainsRole = Qt::UserRole,
+        ExampleListRole,
+        DefinitionsRole,
+        RegionsRole,
+        RegistersRole,
+        PronunciationListRole
+    };
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+
+    virtual QHash<int, QByteArray> roleNames() const override;
+
+    SenseList *list() const;
+    void setList(SenseList *list);
+
+private:
+    SenseList *mList;
+};
+
+
+class ExampleModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_PROPERTY(ExampleList *list READ list WRITE setList)
+
+public:
+    explicit ExampleModel(QObject *parent = nullptr);
+
+    enum {
+        DomainsRole = Qt::UserRole,
+        DefinitionsRole,
+        RegionsRole,
+        RegistersRole,
+        TextRole
+    };
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+
+    virtual QHash<int, QByteArray> roleNames() const override;
+
+    ExampleList *list() const;
+    void setList(ExampleList *list);
+
+private:
+    ExampleList *mList;
+};
+
+
+
+
+
+class PronunciationModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_PROPERTY(PronunciationList *list READ list WRITE setList)
+
+public:
+    explicit PronunciationModel(QObject *parent = nullptr);
+
+    enum {
+        AudioFileRole = Qt::UserRole,
+        PhoneticNotationRole,
+        PhoneticSpellingRole,
+        RegionsRole,
+        DialectsRole
+    };
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+
+    virtual QHash<int, QByteArray> roleNames() const override;
+
+    PronunciationList *list() const;
+    void setList(PronunciationList *list);
+
+private:
+    PronunciationList *mList;
 };
 
 #endif // DICMODEL_H

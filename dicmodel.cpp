@@ -36,31 +36,6 @@ QVariant DicModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool DicModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (!mList)
-        return false;
-
-    HeadwordEntryItem item = mList->items().at(index.row());
-    switch (role) {
-    case IdRole:
-        item.p_id = value.toInt();
-        break;
-    case LanguageRole:
-        item.p_language = value.toString();
-        break;
-    case WordRole:
-        item.p_word = value.toString();
-        break;
-    }
-
-    if (mList->setItemAt(index.row(), item)) {
-        emit dataChanged(index, index, QVector<int>() << role);
-        return true;
-    }
-    return false;
-}
-
 Qt::ItemFlags DicModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
@@ -102,12 +77,6 @@ void DicModel::setList(HeadwordEntryList *list)
             endInsertRows();
         });
 
-        connect(mList, &HeadwordEntryList::preItemRemoved, this, [=](int index) {
-            beginRemoveRows(QModelIndex(), index, index);
-        });
-        connect(mList, &HeadwordEntryList::postItemRemoved, this, [=]() {
-            endRemoveRows();
-        });
     }
     emit endResetModel();
 }

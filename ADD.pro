@@ -1,4 +1,4 @@
-QT += quick core gui network testlib quickcontrols2
+QT += quick core gui network testlib quickcontrols2 qml
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -20,10 +20,13 @@ SOURCES += \
     dicmodel.cpp \
     lexicalentrymodel.cpp \
     entrymodel.cpp \
-    jsonparser.cpp
+    jsonparser.cpp \
+    sensemodel.cpp \
+    examplemodel.cpp \
+    pronunciationmodel.cpp
 
 RESOURCES += qml.qrc
-
+LIBS += -Llibeay32 -Lssleay32
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -42,4 +45,16 @@ HEADERS += \
     dicmodel.h \
     jsonparser.h
 
-DISTFILES +=
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}

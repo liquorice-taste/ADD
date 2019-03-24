@@ -24,33 +24,13 @@ QVariant EntryModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case EtymologiesRole:
         return QVariant(item.p_etymologies);
-    //case SensesListRole:
-        //return QVariant(item.p_senses);
-
+    case SensesListRole:
+        return QVariant::fromValue<QObject *>(item.senses);
     }
 
     return QVariant();
 }
 
-bool EntryModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (!mList)
-        return false;
-
-    EntryItem item = mList->items().at(index.row());
-    switch (role) {
-    case EtymologiesRole:
-        //item.p_etymologies = value.toList();
-        break;
-
-    }
-
-    if (mList->setItemAt(index.row(), item)) {
-        emit dataChanged(index, index, QVector<int>() << role);
-        return true;
-    }
-    return false;
-}
 
 Qt::ItemFlags EntryModel::flags(const QModelIndex &index) const
 {
@@ -63,9 +43,8 @@ Qt::ItemFlags EntryModel::flags(const QModelIndex &index) const
 QHash<int, QByteArray> EntryModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    //names[LanguageRole] = "language";
-    //names[LexicalCathegoryRole] = "lexicalcathegory";
-    //names[TextRole] = "text";
+    names[EtymologiesRole] = "etymologies";
+    names[SensesListRole] = "senses";
     return names;
 }
 
@@ -92,12 +71,6 @@ void EntryModel::setList(EntryList *list)
             endInsertRows();
         });
 
-        connect(mList, &EntryList::preItemRemoved, this, [=](int index) {
-            beginRemoveRows(QModelIndex(), index, index);
-        });
-        connect(mList, &EntryList::postItemRemoved, this, [=]() {
-            endRemoveRows();
-        });
     }
 
     endResetModel();

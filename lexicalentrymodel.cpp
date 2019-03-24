@@ -28,36 +28,11 @@ QVariant LexicalEntryModel::data(const QModelIndex &index, int role) const
         return QVariant(item.p_lexicalCathegory);
     case TextRole:
         return QVariant(item.p_text);
+    case EntriesRole:
+        return QVariant::fromValue<QObject *>(item.p_entries);
     }
 
     return QVariant();
-}
-
-bool LexicalEntryModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-
-
-    if (!mList)
-        return false;
-
-    LexicalEntryItem item = mList->items().at(index.row());
-    switch (role) {
-    case LanguageRole:
-        item.p_language = value.toString();
-        break;
-    case LexicalCathegoryRole:
-        item.p_lexicalCathegory = value.toString();
-        break;
-    case TextRole:
-        item.p_text = value.toString();
-        break;
-    }
-
-    if (mList->setItemAt(index.row(), item)) {
-        emit dataChanged(index, index, QVector<int>() << role);
-        return true;
-    }
-    return false;
 }
 
 Qt::ItemFlags LexicalEntryModel::flags(const QModelIndex &index) const
@@ -74,6 +49,7 @@ QHash<int, QByteArray> LexicalEntryModel::roleNames() const
     names[LanguageRole] = "language";
     names[LexicalCathegoryRole] = "lexicalcathegory";
     names[TextRole] = "ltext";
+    names[EntriesRole] = "entries";
     return names;
 }
 
@@ -98,13 +74,6 @@ void LexicalEntryModel::setList(LexicalEntryList *list)
         });
         connect(mList, &LexicalEntryList::postItemAppended, this, [=]() {
             endInsertRows();
-        });
-
-        connect(mList, &LexicalEntryList::preItemRemoved, this, [=](int index) {
-            beginRemoveRows(QModelIndex(), index, index);
-        });
-        connect(mList, &LexicalEntryList::postItemRemoved, this, [=]() {
-            endRemoveRows();
         });
     }
 
